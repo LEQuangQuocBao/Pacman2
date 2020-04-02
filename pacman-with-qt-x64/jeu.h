@@ -25,15 +25,21 @@ class Objet
 
 class Fantome: public Objet
 {
-
   public:
     Fantome(){}
 };
 
 class Pacman: public Objet
 {
+  protected:
+    int marque;
   public:
-    Pacman(){}
+    Pacman(){
+        marque = 0;
+    }
+    int getMarque(){
+        return marque;
+    }
 };
 
 class GodFantome: public Objet
@@ -97,7 +103,6 @@ class Jeu
     bool posValide(int, int) const;
 
     // Déplace Pacman dans une direction (si la case à atteindre est valide)
-
     bool deplacePacman(Pacman &, Direction);
 };
 

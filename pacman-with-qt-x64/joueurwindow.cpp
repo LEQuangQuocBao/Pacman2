@@ -5,20 +5,22 @@
 #include "jeu.h"
 
 using namespace std;
-Joueur::Joueur(QWidget* pparent, Qt::WindowFlags flags) : QFrame(pparent, flags){
+Mainwnd::joueurWindow::joueurWindow(QWidget* pparent, Qt::WindowFlags flags) : QFrame(pparent, flags){
 
     labelNF = new QLabel("10", this);
-    labelVT = new QLabel("10", this);
-
+    labelVT = new QLabel("25", this);
+    btnCommence = new PacmanButton(this);
+    btnCommence->setText("Commmencer");
+    btnRetourne = new PacmanButton(this);
+    btnRetourne->setText("Retourner");
     resize(500, 500);
-
 }
 
-void Joueur::evolue()
+void Mainwnd::joueurWindow::configurer()
 {
     QFormLayout *formLayout = new QFormLayout;
     //formLayout->setAlignment(Qt::AlignTop);
-    formLayout->setSpacing(50);
+    formLayout->setSpacing(20);
 
     if (nombreJoueur == 1)
     {
@@ -35,7 +37,11 @@ void Joueur::evolue()
 
 
     QSlider* s_numFantomes = new QSlider(Qt::Horizontal , this);
+    s_numFantomes->setMinimum(10);
+    s_numFantomes->setMaximum(50);
     QSlider* s_vitesse = new QSlider(Qt::Horizontal , this);
+    s_vitesse->setMinimum(25);
+    s_vitesse->setMaximum(500);
 
 
     QRadioButton *radio1 = new QRadioButton(tr("Normal Mode"));
@@ -46,11 +52,6 @@ void Joueur::evolue()
     vbox->addWidget(radio2);
     vbox->addStretch(1);
 
-    PacmanButton *btn_commence = new PacmanButton(this);
-    btn_commence->setText("Commmencer");
-    PacmanButton *btn_retourne = new PacmanButton(this);
-    btn_retourne->setText("Retourner");
-
     //formLayout->addRow("Nombre de Fantome:", numFantomes);
     formLayout->addRow("Nombre de Fantomes: ", labelNF);
     formLayout->addRow("", s_numFantomes);
@@ -58,7 +59,7 @@ void Joueur::evolue()
     formLayout->addRow("", s_vitesse);
 
     formLayout->addRow("Mode",vbox);
-    formLayout->addRow(btn_retourne,btn_commence);
+    formLayout->addRow(btnRetourne,btnCommence);
 
     connect(s_numFantomes, &QSlider::valueChanged, labelNF, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     connect(s_vitesse, &QSlider::valueChanged, labelVT, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
@@ -66,27 +67,26 @@ void Joueur::evolue()
     radio1->setChecked(true);
 
 
-    connect(btn_commence, QPushButton::clicked, this, handleCommence);
-    connect(btn_retourne, QPushButton::clicked, this, handleRetourne);
-
+    //connect(btn_commence, QPushButton::clicked, this, handleCommence);
+    //connect(btn_retourne, QPushButton::clicked, this, handleRetourne);
 
     setLayout(formLayout);
 }
 
 
-void Joueur:: handleCommence()
-{
-    PacmanWindow * wnd = new PacmanWindow();
-    wnd->configurer(getNombre(),getNombreFantomes(),getVitesse(),getNumMode());
-    wnd->startJeu();
-    wnd->show();
-    close();
-}
+//void Joueur:: handleCommence()
+//{
+//    PacmanWindow * wnd = new PacmanWindow();
+//    wnd->configurer(getNombre(),getNombreFantomes(),getVitesse(),getNumMode());
+//    wnd->startJeu();
+//    wnd->show();
+//    close();
+//}
 
 //void Joueur::handleRetourne()
 //{
 //
-//    bienvenuewindow * wnd = new bienvenuewindow();
-//    wnd->show();
-//    close();
+//    //bienvenuewindow * wnd = new bienvenuewindow();
+//    //wnd->show();
+//    //close();
 //}

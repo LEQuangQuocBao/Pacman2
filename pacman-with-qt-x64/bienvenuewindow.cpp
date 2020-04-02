@@ -6,47 +6,24 @@
 using namespace std;
 
 Mainwnd::bienvenuewindow::bienvenuewindow(QWidget* pparent, Qt::WindowFlags flags) : QFrame(pparent, flags){
+
     vbox = new QVBoxLayout(this);
     vbox->setSpacing(1);
 
-    oneP = new QPushButton("Un Joueur", this);
-    oneP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    twoP = new QPushButton("Deux Joueur", this);
-    twoP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    QPushButton *hMark = new QPushButton("Meilleur Marque", this);
-    hMark->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    QPushButton *exit = new QPushButton("Exit", this);
-    exit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnUnJoueur = new QPushButton("Un Joueur", this);
+    btnUnJoueur->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnDeuxJoueur = new QPushButton("Deux Joueur", this);
+    btnDeuxJoueur->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnMarque = new QPushButton("Meilleur Marque", this);
+    btnMarque->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    btnSortie = new QPushButton("Sortie", this);
+    btnSortie->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    vbox->addWidget(oneP);
-    vbox->addWidget(twoP);
-    vbox->addWidget(hMark);
-    vbox->addWidget(exit);
+    vbox->addWidget(btnUnJoueur);
+    vbox->addWidget(btnDeuxJoueur);
+    vbox->addWidget(btnMarque);
+    vbox->addWidget(btnSortie);
 
     setLayout(vbox);
-
-    //connect(oneP, QPushButton::clicked, this, openOPW1);
-    //connect(twoP, QPushButton::clicked, this, openOPW2);
-    //connect(exit, QPushButton::clicked, this, close);
-
-    resize(500, 500);
 }
-
-//void bienvenuewindow::openOPW1(){
-//    Joueur* pwn = new Joueur;
-//
-//    pwn->setNombre(1);
-//    pwn->evolue();
-//    pwn->show();
-//    close();
-//}
-//
-//void bienvenuewindow::openOPW2(){
-//    Joueur* pwn = new Joueur;
-//
-//    pwn->setNombre(2);
-//    pwn->evolue();
-//    pwn->show();
-//    close();
-//}
 

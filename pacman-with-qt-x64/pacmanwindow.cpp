@@ -3,20 +3,30 @@
 
 using namespace std;
 
-PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent, flags)
+Mainwnd::PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent, flags)
 {
+    gameOver = false;
+    gameWon = false;
+    paused = false;
+    gameStarted = false;
+    loadImage();
+
+}
+
+void Mainwnd::PacmanWindow::loadImage(){
+
     // Taille des cases en pixels
     int largeurCase, hauteurCase;
 
-    if (pixmapPacman.load("./data/pacman.bmp")==false)
+    if (pixmapPacman.load("./data/pacman.png")==false)
     {
         cout<<"Impossible d'ouvrir pacman.png"<<endl;
         exit(-1);
     }
 
-    if (pixmapFantome.load("./data/fantome.bmp")==false)
+    if (pixmapFantome.load("./data/fantome.png")==false)
     {
-        cout<<"Impossible d'ouvrir fantome.bmp"<<endl;
+        cout<<"Impossible d'ouvrir fantome.png"<<endl;
         exit(-1);
     }
 
@@ -26,11 +36,13 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
         exit(-1);
     }
 
-    if (pixmapMur.load("./data/mur.bmp")==false)
+    if (pixmapMur.load("./data/mur.png")==false)
     {
-        cout<<"Impossible d'ouvrir mur.bmp"<<endl;
+        cout<<"Impossible d'ouvrir mur.png"<<endl;
         exit(-1);
     }
+
+    //PacmanButton *a = new PacmanButton(this);
 
     largeurCase = pixmapMur.width();
     hauteurCase = pixmapMur.height();
@@ -39,31 +51,31 @@ PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pPare
 
 }
 
-void PacmanWindow::configurer(int nJoueur, int nFantome, int vit, int mode)
+void Mainwnd::PacmanWindow::configurer(int nJoueur, int nFantome, int vit, int mode)
 {
     jeu.setInfoJeu(nJoueur,nFantome,vit, mode);
     jeu.init();
 }
 
-void PacmanWindow::startJeu()
+void Mainwnd::PacmanWindow::startJeu()
 {
-    QTimer *timer = new QTimer(this);
-    connect(timer, QTimer::timeout, this, PacmanWindow::handleTimer);
-    timer->start(jeu.getVitesse());
+    vitesseJeu = new QTimer(this);
+    connect(vitesseJeu, QTimer::timeout, this, PacmanWindow::handleTimer);
+    vitesseJeu->start(jeu.getVitesse());
 
     label_countdown = new QLabel("0:10", this);
-    label_countdown->setGeometry(QRect(QPoint(900, 45), QSize(130, 50)));
+    label_countdown->setGeometry(QRect(QPoint(650, 45), QSize(130, 50)));
     label_countdown->setFont(QFont("Arial", 30));
 
+    countTime = new QTimer(this);
     countdown.setHMS(0,0,10,0);
-    QTimer *time = new QTimer(this);
-    connect(time, QTimer::timeout, this, PacmanWindow::handleCountdown);
-    time->start(1000);
+    connect(countTime, QTimer::timeout, this, PacmanWindow::handleCountdown);
+    countTime->start(1000);
 
 }
 
 
-void PacmanWindow::paintEvent(QPaintEvent *e)
+void Mainwnd::PacmanWindow::paintEvent(QPaintEvent *e)
 {
 
     QPainter painter(this);
@@ -98,7 +110,7 @@ void PacmanWindow::paintEvent(QPaintEvent *e)
 
 }
 
-void PacmanWindow::keyPressEvent(QKeyEvent *event)
+void Mainwnd::PacmanWindow::keyPressEvent(QKeyEvent *event)
 {
 
     if (event->key()==Qt::Key_Left)
@@ -127,35 +139,37 @@ void PacmanWindow::keyPressEvent(QKeyEvent *event)
     update();
 }
 
-void PacmanWindow::handleTimer()
+void Mainwnd::PacmanWindow::handleTimer()
 {
     jeu.evolue();
     repaint();
 }
 
-void PacmanWindow::handleCountdown()
+void Mainwnd::PacmanWindow::handleCountdown()
 {
-    if (countdown.second() != 0)
+    if (countdown.second() != 1)
         countdown = countdown.addSecs(-1);
     else
-        //close();
+        countTime->stop();
     label_countdown->setText(countdown.toString("m:ss"));
 }
 
 
-void PacmanWindow::ajoutFantome()
-{
-    Fantome f;
-    int x, y;
-    Direction dir;
-    // Initialize random position et direction
-}
+//void Mainwnd::PacmanWindow::ajoutFantome()
+//{
+//    Fantome f;
+//    int x, y;
+//    Direction dir;
+//    // Initialize random position et direction
+//}
+//
+//void Mainwnd::PacmanWindow::supprFantome()
+//{
+//    if (!jeu.fantomes.empty())
+//        jeu.fantomes.pop_back();
+//}
 
-void PacmanWindow::supprFantome()
-{
-    if (!jeu.fantomes.empty())
-        jeu.fantomes.pop_back();
-}
+
 
 // Classe PacmanButton
 PacmanButton::PacmanButton(QWidget *parent) : QPushButton(parent) { }

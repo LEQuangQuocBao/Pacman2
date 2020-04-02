@@ -4,13 +4,11 @@
 #include <QtCore/QtCore>
 #include <QtWidgets/QtWidgets>
 #include "jeu.h"
-#include "joueurwindow.h"
+//#include "joueurwindow.h"
+#include "Mainwnd.h"
 
-class PacmanWindow : public QFrame
+class Mainwnd::PacmanWindow : public QFrame
 {
-  private:
-    QLabel* label_countdown;
-    QTime countdown;
 
   protected:
     Jeu jeu;
@@ -20,11 +18,7 @@ class PacmanWindow : public QFrame
   public:
     PacmanWindow(QWidget *pParent=0, Qt::WindowFlags flags=0);
 
-    void configurer(int ,int ,int, int);
-    void startJeu();
-
-    void handleTimer();
-    void handleCountdown();
+    void loadImage();
 
 
     void ajoutFantome();        // ajouter un fantome
@@ -37,19 +31,46 @@ class PacmanWindow : public QFrame
     bool handleCollisionTime();
 
 
-    protected:
+  public:
         void paintEvent(QPaintEvent *);
         void keyPressEvent(QKeyEvent *);
+    void handleTimer();
+    void handleCountdown();
+    //void drawObjects(QPainter *);
+    //void finishGame(QPainter *, QString);
+    //void moveObjects();
+
+    void configurer(int ,int ,int, int);
+    void startJeu();
+    void pauseJeu();
+    //void stopGame();
+    void victory();
+    //void checkCollision();
+
+  private:
+    QLabel* label_countdown;
+    QLabel* label_marqueA;
+    QLabel* label_marqueB;
+    QTime countdown;
+    QTimer *vitesseJeu;
+    QTimer *countTime;
+
+  private:
+    //int timeId;
+    bool gameOver;
+    bool gameWon;
+    bool gameStarted;
+    bool paused;
 };
 
 class PacmanButton : public QPushButton
-{
+    {
+    //friend class PacmanWindow;
     protected:
         void keyPressEvent(QKeyEvent *);
     public:
         PacmanButton(QWidget *parent=0);
-
-};
+    };
 
 
 #endif

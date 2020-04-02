@@ -5,21 +5,18 @@
 #include <QtWidgets/QtWidgets>
 #include "Mainwnd.h"
 
-class Mainwnd::bienvenuewindow
+class Mainwnd::bienvenuewindow: public QFrame
 {
 public:
     bienvenuewindow(QWidget* pparent=0, Qt::WindowFlags flags=0);
-//    QPushButton*  getButton(){
-//        return oneP;
-//    }
 
-protected:
-    //void openOPW1();
-    //void openOPW2();
 public:
     QVBoxLayout *vbox;
-    QPushButton *oneP;
-    QPushButton *twoP;
+
+    QPushButton *btnUnJoueur;
+    QPushButton *btnDeuxJoueur;
+    QPushButton *btnMarque;
+    QPushButton *btnSortie;
 };
 
 

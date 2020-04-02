@@ -3,17 +3,19 @@
 
 #include <QtCore/QtCore>
 #include <QtWidgets/QtWidgets>
-#include "jeu.h"
+//#include "jeu.h"
 
-class Joueur : public QFrame{
+#include "Mainwnd.h"
+
+class Mainwnd::joueurWindow : public QFrame{
 
   public:
-    Joueur(QWidget* pparent=0, Qt::WindowFlags flags=0);
-    void evolue();
+    joueurWindow(QWidget* pparent=0, Qt::WindowFlags flags=0);
+    void configurer();
 
 //    void handleCommence();
-    void handleRetourne();
-    void handleCommence();
+    //void handleRetourne();
+    //void handleCommence();
 
     int getVitesse()
     {
@@ -53,13 +55,15 @@ class Joueur : public QFrame{
         return numeroMode;
     }
 
-  private:
+    public:
     QLineEdit *name1;
     QLineEdit *name2;
     QLabel *labelNF;
     QLabel *labelVT;
     int numeroMode;
     int nombreJoueur;
+    PacmanButton *btnCommence;
+    PacmanButton *btnRetourne;
 
 };
 

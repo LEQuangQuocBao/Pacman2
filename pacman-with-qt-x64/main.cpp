@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     srand(time(0));
 
     Mainwnd bvn;
-    bvn.changeEcran(1);
+    //bvn.changeEcran(1);
     bvn.show();
 
     return app.exec();
