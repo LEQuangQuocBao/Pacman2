@@ -1,7 +1,5 @@
 #include <iostream>
 #include "bienvenuewindow.h"
-//#include "pacmanwindow.h"
-//#include "joueurwindow.h"
 
 using namespace std;
 
@@ -16,7 +14,7 @@ Mainwnd::bienvenuewindow::bienvenuewindow(QWidget* pparent, Qt::WindowFlags flag
     btnDeuxJoueur->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     btnMarque = new QPushButton("Meilleur Marque", this);
     btnMarque->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    btnSortie = new QPushButton("Sortie", this);
+    btnSortie = new QPushButton("Sortir", this);
     btnSortie->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     vbox->addWidget(btnUnJoueur);

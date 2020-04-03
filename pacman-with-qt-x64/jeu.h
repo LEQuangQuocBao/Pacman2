@@ -2,9 +2,10 @@
 #define JEU_H
 
 #include <list>
+#include <string>
 using namespace std;
 
-typedef enum {VIDE, MUR} Case;
+typedef enum {VIDE, MUR1, MUR2, MUR3} Case;
 typedef enum {GAUCHE, DROITE, HAUT, BAS} Direction;
 
 class Jeu;
@@ -25,21 +26,44 @@ class Objet
 
 class Fantome: public Objet
 {
+  protected:
+    int codeFan;
   public:
-    Fantome(){}
+    Fantome(){
+        codeFan = 1;
+    }
+    int getCode() const{
+        return codeFan;
+    }
+    void setCode(int a){
+        codeFan = a;
+    }
 };
 
 class Pacman: public Objet
 {
   protected:
     int marque;
+    string name;
   public:
     Pacman(){
         marque = 0;
+        name.assign("");
     }
+
     int getMarque(){
         return marque;
     }
+    void increaseMarque(int bonus){
+        marque += bonus;
+    }
+    string getName(){
+        return name;
+    }
+    void setName(string str){
+        name.assign(str);
+    }
+
 };
 
 class GodFantome: public Objet
@@ -75,7 +99,6 @@ class Jeu
         ~Jeu();
         Jeu &operator=(const Jeu &)=delete;
 
-//    bool init();
     bool init();
     void evolue();
 
@@ -84,7 +107,7 @@ class Jeu
     int getNbCasesY() const;
 
     //Mettre les parametre necessaire
-    void setInfoJeu(int, int, int, int);
+    void setInfoJeu(string, string, int, int, int, int);
 
     //Retourne les parametre pour configurer le jeu
     int getNombreJoueur() const;

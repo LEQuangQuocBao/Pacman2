@@ -4,8 +4,10 @@
 #include <QtCore/QtCore>
 #include <QtWidgets/QtWidgets>
 //#include "jeu.h"
-
+#include <string>
 #include "Mainwnd.h"
+
+using namespace std;
 
 class Mainwnd::joueurWindow : public QFrame{
 
@@ -29,12 +31,18 @@ class Mainwnd::joueurWindow : public QFrame{
 
     string getName1()
     {
-    return (name1->text()).toStdString();
+        if ((name1.text()).toStdString()=="")
+            return (name1.placeholderText()).toStdString();
+        else
+            return (name1.text()).toStdString();
     }
 
     string getName2()
     {
-    return (name2->text()).toStdString();
+        if ((name2.text()).toStdString()=="")
+            return (name2.placeholderText()).toStdString();
+        else
+            return (name2.text()).toStdString();
     }
 
     void setNombre(int a){
@@ -45,25 +53,21 @@ class Mainwnd::joueurWindow : public QFrame{
         return nombreJoueur;
     }
 
-    void setNumMode(){
-        if (numeroMode != 1)
-            numeroMode = 1;
-        else numeroMode = 2;
-    }
 
     int getNumMode(){
-        return numeroMode;
+        return (labelMO->text()).toInt();
     }
 
     public:
-    QLineEdit *name1;
-    QLineEdit *name2;
+    QLineEdit name1;
+    QLineEdit name2;
     QLabel *labelNF;
     QLabel *labelVT;
+    QLabel *labelMO;
     int numeroMode;
     int nombreJoueur;
-    PacmanButton *btnCommence;
-    PacmanButton *btnRetourne;
+    QPushButton *btnCommence;
+    QPushButton *btnRetourne;
 
 };
 

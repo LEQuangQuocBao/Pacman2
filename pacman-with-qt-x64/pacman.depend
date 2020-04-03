@@ -7745,21 +7745,20 @@
 	"pacmanwindow.h"
 	"joueurwindow.h"
 
-1585850174 source:d:\git\pac\pacman\pacman-with-qt-x64\jeu.cpp
+1585915809 source:d:\git\pac\pacman\pacman-with-qt-x64\jeu.cpp
 	"jeu.h"
 	<iostream>
 	<assert.h>
 	<fstream>
 
-1585844316 d:\git\pac\pacman\pacman-with-qt-x64\jeu.h
+1585904512 d:\git\pac\pacman\pacman-with-qt-x64\jeu.h
 	<list>
+	<string>
 
-1585850246 source:d:\git\pac\pacman\pacman-with-qt-x64\joueurwindow.cpp
+1585915706 source:d:\git\pac\pacman\pacman-with-qt-x64\joueurwindow.cpp
 	<iostream>
-	"bienvenuewindow.h"
-	"pacmanwindow.h"
+	<string>
 	"joueurwindow.h"
-	"jeu.h"
 
 1585785660 d:\git\pac\pacman\pacman-with-qt-x64\bienvenuewindow.h
 	<QtCore/QtCore>
@@ -11576,26 +11575,29 @@
 
 1584711421 d:\git\pac\pacman\qtbase-small-5.6.3-x64\include\qtwidgets\qtwidgetsversion.h
 
-1585795977 d:\git\pac\pacman\pacman-with-qt-x64\mainwnd.h
+1585910922 d:\git\pac\pacman\pacman-with-qt-x64\mainwnd.h
 	<QtCore/QtCore>
 	<QtWidgets/QtWidgets>
+	<string>
+	<fstream>
 
-1585849209 d:\git\pac\pacman\pacman-with-qt-x64\pacmanwindow.h
+1585912477 d:\git\pac\pacman\pacman-with-qt-x64\pacmanwindow.h
 	<QtCore/QtCore>
 	<QtWidgets/QtWidgets>
 	"jeu.h"
 	"Mainwnd.h"
 
-1585795856 d:\git\pac\pacman\pacman-with-qt-x64\joueurwindow.h
+1585915854 d:\git\pac\pacman\pacman-with-qt-x64\joueurwindow.h
 	<QtCore/QtCore>
 	<QtWidgets/QtWidgets>
+	<string>
 	"Mainwnd.h"
 
-1585849338 source:d:\git\pac\pacman\pacman-with-qt-x64\pacmanwindow.cpp
+1585915124 source:d:\git\pac\pacman\pacman-with-qt-x64\pacmanwindow.cpp
 	<iostream>
 	"pacmanwindow.h"
 
-1585785660 source:d:\git\pac\pacman\pacman-with-qt-x64\bienvenuewindow.cpp
+1585892858 source:d:\git\pac\pacman\pacman-with-qt-x64\bienvenuewindow.cpp
 	<iostream>
 	"bienvenuewindow.h"
 
@@ -11604,10 +11606,20 @@
 	<QtWidgets/qapplication.h>
 	"Mainwnd.h"
 
-1585840078 source:d:\git\pac\pacman\pacman-with-qt-x64\mainwnd.cpp
+1585915124 source:d:\git\pac\pacman\pacman-with-qt-x64\mainwnd.cpp
 	<iostream>
 	"Mainwnd.h"
 	"bienvenuewindow.h"
 	"pacmanwindow.h"
 	"joueurwindow.h"
+	"result.h"
+
+1585897273 source:d:\git\pac\pacman\pacman-with-qt-x64\result.cpp
+	<iostream>
+	"result.h"
+
+1585894325 d:\git\pac\pacman\pacman-with-qt-x64\result.h
+	<QtCore/QtCore>
+	<QtWidgets/QtWidgets>
+	"Mainwnd.h"
 

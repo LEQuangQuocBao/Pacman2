@@ -10,44 +10,42 @@
 class Mainwnd::PacmanWindow : public QFrame
 {
 
-  protected:
+  public:
     Jeu jeu;
 
-    QPixmap pixmapPacman, pixmapTime, pixmapFantome, pixmapMur, pixmapGod;
-    QPixmap pixmapPacHaut, pixmapPacBas, pixmapPacGauche, pixmapPacDroite;
+    QPixmap pixmapPacmanDefaut, pixmapPacman1, pixmapPacman2, pixmapPacman3, pixmapPacman4;
+    QPixmap pixmapMur1, pixmapMur2, pixmapMur3, pixmapGrass;
+    QPixmap pixmapGod, pixmapFantome1, pixmapFantome2, pixmapFantome3;
   public:
     PacmanWindow(QWidget *pParent=0, Qt::WindowFlags flags=0);
 
     void loadImage();
+    void setupLabel();
 
-
-    void ajoutFantome();        // ajouter un fantome
-    void supprFantome();        // supprimer un fantome
-
-    bool isCollision();
-    void handleCollision();
-
-    bool isCollisionTime();
-    bool handleCollisionTime();
+    //void ajoutFantome();        // ajouter un fantome
+    //void supprFantome();        // supprimer un fantome
 
 
   public:
-        void paintEvent(QPaintEvent *);
-        void keyPressEvent(QKeyEvent *);
+    void paintEvent(QPaintEvent *);
+    void paintMur(QPainter *);
+    void paintFantome(QPainter *);
+
+    void keyPressEvent(QKeyEvent *);
     void handleTimer();
     void handleCountdown();
-    //void drawObjects(QPainter *);
-    //void finishGame(QPainter *, QString);
-    //void moveObjects();
 
-    void configurer(int ,int ,int, int);
+
+    void configurer(string, string, int ,int ,int, int);
     void startJeu();
     void pauseJeu();
-    //void stopGame();
-    void victory();
-    //void checkCollision();
+    void stopJeu();
+    void gagneJeu(int );
+    void handleResultat();
+    void checkCollision(Pacman &);
+    void handleCollision();
 
-  private:
+  public:
     QLabel* label_countdown;
     QLabel* label_marqueA;
     QLabel* label_marqueB;
@@ -55,12 +53,13 @@ class Mainwnd::PacmanWindow : public QFrame
     QTimer *vitesseJeu;
     QTimer *countTime;
 
-  private:
+  public:
     //int timeId;
-    bool gameOver;
-    bool gameWon;
-    bool gameStarted;
+    bool gameFini;
     bool paused;
+    bool gameGagne;
+    string resultat;
+    int countGod;
 };
 
 class PacmanButton : public QPushButton

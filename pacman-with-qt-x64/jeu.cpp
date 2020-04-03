@@ -32,8 +32,10 @@ Jeu::~Jeu()
         delete[] terrain;
 }
 
-void Jeu::setInfoJeu(int nJoueur, int nFantome, int vit, int mode)
+void Jeu::setInfoJeu(string name1, string name2, int nJoueur, int nFantome, int vit, int mode)
 {
+    pacmanA.setName(name1);
+    pacmanB.setName(name2);
     nombreJoueur = nJoueur;
     nombreFantome = nFantome;
     vitesse = vit;
@@ -43,44 +45,46 @@ void Jeu::setInfoJeu(int nJoueur, int nFantome, int vit, int mode)
 
 bool Jeu::init()
 {
+    int n;
 	int x, y;
 	list<Fantome>::iterator itFantome;
 	list<GodFantome>::iterator itGod;
 
-//	const char terrain_defaut[15][21] = {
-//		"####################",
-//		"#........##........#",
-//		"#.#####..##...####.#",
-//		"#........##........#",
-//		"#..................#",
-//		"#......#....#......#",
-//		"#......#...##......#",
-//		"#####..#....#..#####",
-//		"#......##...#......#",
-//		"#......#....#......#",
-//		"#..................#",
-//		"#..................#",
-//		"#.....#......#.....#",
-//		"#.....#......#.....#",
-//        "####################"
-//    };
     ifstream mur;
-    mur.open("mur.txt");
-    char terrain_defaut[15][21] = {};
-
-    for(int i = 0; i < 15; i++){
-        for(int j = 0; j < 20; j++)
-            mur >> terrain_defaut[i][j];
+    mur.open("./mur.txt");
+    mur >> n;
+    char terrain_defaut[n+1][15][21] = {};
+    for (int k = 1;k < n+1; k++){
+        for(int i = 0; i < 15; i++){
+            for(int j = 0; j < 20; j++)
+                mur >> terrain_defaut[k][i][j];
+        }
     }
 	largeur = 20;
 	hauteur = 15;
+    mur.close();
 
 	terrain = new Case[largeur*hauteur];
 
+	//choisir le terrain joué
+
 	for(y=0;y<hauteur;++y)
 		for(x=0;x<largeur;++x)
-            if (terrain_defaut[y][x]=='#')
-                terrain[y*largeur+x] = MUR;
+            if (terrain_defaut[numeroMode][y][x]=='#'){
+                int k;
+                k = rand()%3+1;
+                switch (k){
+                    case 1:
+                        terrain[y*largeur+x] = MUR1;
+                        break;
+                    case 2:
+                        terrain[y*largeur+x] = MUR2;
+                        break;
+                    case 3:
+                        terrain[y*largeur+x] = MUR3;
+                        break;
+                }
+            }
             else
                 terrain[y*largeur+x] = VIDE;
 
@@ -96,6 +100,7 @@ bool Jeu::init()
         itFantome->posX = x;
         itFantome->posY = y;
         itFantome->dir = (Direction)(rand()%4);
+        itFantome->setCode(rand()%3+1);
     }
 
 
@@ -182,6 +187,11 @@ void Jeu::evolue()
 int Jeu::getNombreJoueur() const
 {
     return nombreJoueur;
+}
+
+int Jeu::getNombreFantome() const
+{
+    return nombreFantome;
 }
 
 int Jeu::getVitesse() const

@@ -1,17 +1,17 @@
 #include <iostream>
-#include "bienvenuewindow.h"
-#include "pacmanwindow.h"
+#include <string>
 #include "joueurwindow.h"
-#include "jeu.h"
 
 using namespace std;
+
 Mainwnd::joueurWindow::joueurWindow(QWidget* pparent, Qt::WindowFlags flags) : QFrame(pparent, flags){
 
     labelNF = new QLabel("10", this);
     labelVT = new QLabel("25", this);
-    btnCommence = new PacmanButton(this);
+    labelMO = new QLabel("1",this);
+    btnCommence = new QPushButton(this);
     btnCommence->setText("Commmencer");
-    btnRetourne = new PacmanButton(this);
+    btnRetourne = new QPushButton(this);
     btnRetourne->setText("Retourner");
     resize(500, 500);
 }
@@ -24,15 +24,15 @@ void Mainwnd::joueurWindow::configurer()
 
     if (nombreJoueur == 1)
     {
-        name1 = new QLineEdit(this);
-        formLayout->addRow("Name:", name1);
+        name1.setPlaceholderText("Bao");
+        formLayout->addRow("Name:", &name1);
     }
     else
     {
-        name1 = new QLineEdit(this);
-        name2 = new QLineEdit(this);
-        formLayout->addRow("Name1:", name1);
-        formLayout->addRow("Name2:", name2);
+        name1.setPlaceholderText("Bao");
+        name2.setPlaceholderText("Linh");
+        formLayout->addRow("Name1:", &name1);
+        formLayout->addRow("Name2:", &name2);
     }
 
 
@@ -42,15 +42,17 @@ void Mainwnd::joueurWindow::configurer()
     QSlider* s_vitesse = new QSlider(Qt::Horizontal , this);
     s_vitesse->setMinimum(25);
     s_vitesse->setMaximum(500);
+    QSpinBox * s_mode = new QSpinBox(this);
+    s_mode->setMinimum(1);
+    s_mode->setMaximum(7);
 
+    //QRadioButton *radio1 = new QRadioButton(tr("Normal Mode"));
+    //QRadioButton *radio2 = new QRadioButton(tr("Advanced Mode"));
 
-    QRadioButton *radio1 = new QRadioButton(tr("Normal Mode"));
-    QRadioButton *radio2 = new QRadioButton(tr("Advanced Mode"));
-
-    QVBoxLayout *vbox = new QVBoxLayout;
-    vbox->addWidget(radio1);
-    vbox->addWidget(radio2);
-    vbox->addStretch(1);
+//    QVBoxLayout *vbox = new QVBoxLayout;
+//    vbox->addWidget(radio1);
+//    vbox->addWidget(radio2);
+//    vbox->addStretch(1);
 
     //formLayout->addRow("Nombre de Fantome:", numFantomes);
     formLayout->addRow("Nombre de Fantomes: ", labelNF);
@@ -58,35 +60,18 @@ void Mainwnd::joueurWindow::configurer()
     formLayout->addRow("Vitesse:", labelVT);
     formLayout->addRow("", s_vitesse);
 
-    formLayout->addRow("Mode",vbox);
+    formLayout->addRow("Mode", labelMO);
+    formLayout->addRow("",s_mode);
     formLayout->addRow(btnRetourne,btnCommence);
 
     connect(s_numFantomes, &QSlider::valueChanged, labelNF, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     connect(s_vitesse, &QSlider::valueChanged, labelVT, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
-    connect(radio1, QRadioButton::toggled, this, setNumMode);
-    radio1->setChecked(true);
+    connect(s_mode, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),labelMO, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
+    //connect(radio1, QRadioButton::toggled, this, setNumMode);
+    //radio1->setChecked(true);
 
-
-    //connect(btn_commence, QPushButton::clicked, this, handleCommence);
-    //connect(btn_retourne, QPushButton::clicked, this, handleRetourne);
 
     setLayout(formLayout);
 }
 
 
-//void Joueur:: handleCommence()
-//{
-//    PacmanWindow * wnd = new PacmanWindow();
-//    wnd->configurer(getNombre(),getNombreFantomes(),getVitesse(),getNumMode());
-//    wnd->startJeu();
-//    wnd->show();
-//    close();
-//}
-
-//void Joueur::handleRetourne()
-//{
-//
-//    //bienvenuewindow * wnd = new bienvenuewindow();
-//    //wnd->show();
-//    //close();
-//}
