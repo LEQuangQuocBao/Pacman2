@@ -13,13 +13,11 @@ Mainwnd::joueurWindow::joueurWindow(QWidget* pparent, Qt::WindowFlags flags) : Q
     btnCommence->setText("Commmencer");
     btnRetourne = new QPushButton(this);
     btnRetourne->setText("Retourner");
-    resize(500, 500);
 }
 
 void Mainwnd::joueurWindow::configurer()
 {
     QFormLayout *formLayout = new QFormLayout;
-    //formLayout->setAlignment(Qt::AlignTop);
     formLayout->setSpacing(20);
 
     if (nombreJoueur == 1)
@@ -46,15 +44,6 @@ void Mainwnd::joueurWindow::configurer()
     s_mode->setMinimum(1);
     s_mode->setMaximum(7);
 
-    //QRadioButton *radio1 = new QRadioButton(tr("Normal Mode"));
-    //QRadioButton *radio2 = new QRadioButton(tr("Advanced Mode"));
-
-//    QVBoxLayout *vbox = new QVBoxLayout;
-//    vbox->addWidget(radio1);
-//    vbox->addWidget(radio2);
-//    vbox->addStretch(1);
-
-    //formLayout->addRow("Nombre de Fantome:", numFantomes);
     formLayout->addRow("Nombre de Fantomes: ", labelNF);
     formLayout->addRow("", s_numFantomes);
     formLayout->addRow("Vitesse:", labelVT);
@@ -67,9 +56,6 @@ void Mainwnd::joueurWindow::configurer()
     connect(s_numFantomes, &QSlider::valueChanged, labelNF, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     connect(s_vitesse, &QSlider::valueChanged, labelVT, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     connect(s_mode, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),labelMO, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
-    //connect(radio1, QRadioButton::toggled, this, setNumMode);
-    //radio1->setChecked(true);
-
 
     setLayout(formLayout);
 }

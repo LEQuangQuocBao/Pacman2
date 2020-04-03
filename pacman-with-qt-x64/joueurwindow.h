@@ -3,21 +3,20 @@
 
 #include <QtCore/QtCore>
 #include <QtWidgets/QtWidgets>
-//#include "jeu.h"
 #include <string>
 #include "Mainwnd.h"
 
 using namespace std;
 
+/*Cette class correspond à la fenêtre de configuration du jeu, ça veut dire qu'il faut tapper le nom,
+choisir la vitesse, le nombre de fantome, le mode à jouer(il y a 7 mode à choisir qui correcpends aux 7 terrains différences) */
+
 class Mainwnd::joueurWindow : public QFrame{
 
   public:
     joueurWindow(QWidget* pparent=0, Qt::WindowFlags flags=0);
-    void configurer();
 
-//    void handleCommence();
-    //void handleRetourne();
-    //void handleCommence();
+    void configurer(); //configuration des widgets
 
     int getVitesse()
     {

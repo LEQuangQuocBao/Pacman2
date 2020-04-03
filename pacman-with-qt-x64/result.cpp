@@ -22,12 +22,6 @@ Mainwnd::resultWindow::resultWindow(QWidget* pparent, Qt::WindowFlags flags) : Q
     vbox->addWidget(btnSortir);
 
     setLayout(vbox);
-
-//    connect(replay, QPushButton::clicked, this, handleReplay);
-//    connect(saveNote, QPushButton::clicked, this, handleSavenote);
-//    connect(exit, QPushButton::clicked, this, close);
-
-    //resize(500, 500);
 }
 
 void Mainwnd::resultWindow::setResultat(string result){

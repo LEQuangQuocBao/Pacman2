@@ -14,13 +14,17 @@ Mainwnd::PacmanWindow::PacmanWindow(QWidget *pParent, Qt::WindowFlags flags):QFr
     vitesseJeu = new QTimer(this);
     connect(vitesseJeu, QTimer::timeout, this, PacmanWindow::handleTimer);
     countTime = new QTimer(this);
+    connect(countTime, QTimer::timeout, this, PacmanWindow::handleCountdown);
+
 }
 
-void Mainwnd::PacmanWindow::loadImage(){
+void Mainwnd::PacmanWindow::loadImage()
+{
 
     // Taille des cases en pixels
     int largeurCase, hauteurCase;
 
+    // Charqer les pixmaps pour le pacman
     if (pixmapPacman1.load("./data/pacman1.png")==false)
     {
         cout<<"Impossible d'ouvrir pacman1.png"<<endl;
@@ -43,6 +47,7 @@ void Mainwnd::PacmanWindow::loadImage(){
     }
     pixmapPacmanDefaut = pixmapPacman4;
 
+    // Charqer les pixmaps pour le fantome
     if (pixmapFantome1.load("./data/fantome1.png")==false)
     {
         cout<<"Impossible d'ouvrir fantome.png"<<endl;
@@ -59,13 +64,14 @@ void Mainwnd::PacmanWindow::loadImage(){
         exit(-1);
     }
 
+    // Charqer les pixmaps pour le godFantome
     if (pixmapGod.load("./data/godFantome.png")==false)
     {
         cout<<"Impossible d'ouvrir god fantome.bmp"<<endl;
         exit(-1);
     }
 
-
+    // Charqer les pixmaps pour le mur
     if (pixmapMur1.load("./data/mur1.png")==false)
     {
         cout<<"Impossible d'ouvrir mur1.png"<<endl;
@@ -104,17 +110,16 @@ void Mainwnd::PacmanWindow::setupLabel()
         label_countdown->setGeometry(QRect(QPoint(700, 45), QSize(130, 50)));
         label_countdown->setFont(QFont("Arial", 30));
 
-        connect(countTime, QTimer::timeout, this, PacmanWindow::handleCountdown);
         QLabel* labelA = new QLabel( QString::fromStdString(jeu.pacmanA.getName()), this);
         labelA->setGeometry(QRect(QPoint(650, 90), QSize(300, 100)));
         labelA->setFont(QFont("Arial", 30));
 
         QLabel* labelA1 = new QLabel("Mark: ", this);
-        labelA1->setGeometry(QRect(QPoint(650, 120), QSize(300, 100)));
+        labelA1->setGeometry(QRect(QPoint(675, 135), QSize(300, 100)));
         labelA1->setFont(QFont("Arial", 30));
 
         label_marqueA = new QLabel(this);
-        label_marqueA->setGeometry(QRect(QPoint(700, 150), QSize(200, 100)));
+        label_marqueA->setGeometry(QRect(QPoint(700, 180), QSize(200, 100)));
         label_marqueA->setFont(QFont("Arial", 30));
         label_marqueA->setText(QString::fromStdString(std::to_string(jeu.pacmanA.getMarque())));
     }
@@ -152,7 +157,6 @@ void Mainwnd::PacmanWindow::startJeu()
     vitesseJeu->start(jeu.getVitesse());
     countTime->start(1000);
 }
-
 
 void Mainwnd::PacmanWindow::pauseJeu()
 {
@@ -248,7 +252,6 @@ void Mainwnd::PacmanWindow::paintEvent(QPaintEvent *e)
 
 }
 
-
 void Mainwnd::PacmanWindow::keyPressEvent(QKeyEvent *event)
 {
     int key = event->key();
@@ -264,11 +267,11 @@ void Mainwnd::PacmanWindow::keyPressEvent(QKeyEvent *event)
             jeu.deplacePacman(jeu.pacmanA,BAS);
 
         if (jeu.getNombreJoueur() == 2){
-            if (key == Qt::Key_A)
+            if (key == Qt::Key_Q)
                 jeu.deplacePacman(jeu.pacmanB,GAUCHE);
             else if (key == Qt::Key_D)
                 jeu.deplacePacman(jeu.pacmanB,DROITE);
-            else if (key == Qt::Key_W)
+            else if (key == Qt::Key_Z)
                 jeu.deplacePacman(jeu.pacmanB,HAUT);
             else if (key == Qt::Key_S)
                 jeu.deplacePacman(jeu.pacmanB,BAS);
@@ -291,13 +294,14 @@ void Mainwnd::PacmanWindow::handleTimer()
 
 void Mainwnd::PacmanWindow::handleCountdown()
 {
-    if (jeu.getNombreJoueur()){
+    if (jeu.getNombreJoueur()==1){
         if (countdown.second() != 0)
-            countdown = countdown.addSecs(-1);
+            countdown = countdown.addSecs(-1); ////correspond à 1000ms(1s)
         else
             stopJeu();
         label_countdown->setText(countdown.toString("m:ss"));
     }
+    //Pour faire clignoter les 3 godfantomes, de 0->3: il apparaitre, de 4->6: il disparaitre, lorsde countGod = 6, on le remet à 0
     if (countGod != 6)
         countGod++;
     else
@@ -308,17 +312,32 @@ void Mainwnd::PacmanWindow::checkCollision(Pacman & pac)
 {
     for(auto it = jeu.fantomes.begin(); it != jeu.fantomes.end(); it++){
         if(it->getPosX() == pac.getPosX() && it->getPosY() == pac.getPosY()){
-            pac.increaseMarque(1);
-            jeu.fantomes.erase(it);
+            pac.increaseMarque(1); // plus 1 mark
+            jeu.fantomes.erase(it); // supprimer ce fantome
         }
     }
     for(auto it = jeu.godFantomes.begin(); it != jeu.godFantomes.end(); it++){
         if(it->getPosX() == pac.getPosX() && it->getPosY() == pac.getPosY()){
-            if (jeu.getNombreJoueur() == 1)
-                countdown = countdown.addSecs(3);
+            if (jeu.getNombreJoueur() == 1){
+                countdown = countdown.addSecs(3); // plus 3 secondes dans le cas 1 joueurs
+                //changer le apercu du pacman
+                switch (jeu.godFantomes.size()){
+                case 3:
+                    pixmapPacmanDefaut = pixmapPacman3;
+                    break;
+                case 2:
+                    pixmapPacmanDefaut = pixmapPacman2;
+                    break;
+                case 1:
+                    pixmapPacmanDefaut = pixmapPacman1;
+                    break;
+                default:
+                    pixmapPacmanDefaut =pixmapPacman4;
+                };
+            }
             else
-                pac.increaseMarque(3);
-            jeu.godFantomes.erase(it);
+                pac.increaseMarque(3); // plus 3 marks si dans le cas 2 joueurs
+            jeu.godFantomes.erase(it); //supprimer
         }
     }
 }
@@ -347,15 +366,4 @@ void Mainwnd::PacmanWindow::handleCollision()
         label_marqueA->setText(QString::fromStdString(std::to_string(jeu.pacmanA.getMarque())));
         label_marqueB->setText(QString::fromStdString(std::to_string(jeu.pacmanB.getMarque())));
     }
-
 }
-
-// Classe PacmanButton
-PacmanButton::PacmanButton(QWidget *parent) : QPushButton(parent) { }
-
-void PacmanButton::keyPressEvent(QKeyEvent *e)
-{
-    if(parent() != NULL)
-        QCoreApplication::sendEvent(parent(), e);
-}
-

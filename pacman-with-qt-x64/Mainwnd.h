@@ -7,15 +7,18 @@
 #include <fstream>
 using namespace std;
 
+/*La principal fenêtre qui héritie QMainWindow, des widgets vont apparitre ici avec QMenubar et QStatusbar */
+
 class Mainwnd : public QMainWindow {
 
 private:
-    class bienvenuewindow;
-    class joueurWindow;
-    class PacmanWindow;
-    class resultWindow;
-    //fstream resultat;
-    string result[2][5];
+    //quatre classes imbriquées de la classe Mainwnd
+    class bienvenuewindow; // contient des widgets nécessaires pour la fenetre de bienvenue
+    class joueurWindow; // contient des widgets nécessaires pour la fenetre de configuration le jeu
+    class PacmanWindow; // contient des widgets de la fenetre du jeu
+    class resultWindow; // contient des widgets de la fenetre de résultat
+
+    string result[2][5] = {}; //tableau contient le resultat du jeu
 
 public:
     Mainwnd(QWidget *parent = 0);
@@ -29,31 +32,34 @@ public:
 
 
 public:
-//Initlisation les QFrame
-    void init_bienvenueWnd();
-    void init_caractWnd(int );
-    void init_pacmanWnd(string, string, int, int, int, int);
-    void init_resultWnd(string);
+//Initlisation les QFrames
+    void init_bienvenueWnd(); // initialisation la fenêtre de bienvenue
+    void init_caractWnd(int ); // initalisation la fenêtre de configuration de jeu
+    void init_pacmanWnd(string, string, int, int, int, int); // initialisation la fenêtre de jeu
+    void init_resultWnd(string); // initialisaion la fenêtre de résultat
 
 //Les slots pour bienvenueWnd
-    void handleUnJoueur();
-    void handleDeuxJoueur();
+    void handleUnJoueur(); // manipulation pour un joueur
+    void handleDeuxJoueur(); // manipulation pour deux joueur
 //Les slots pour caractWnd
 
-    void handleCommence();
-    void handleNouveauJeu();
-    void handleResultat();
-    void handleMeuilleurNote();
+    void handleCommence(); // manipulation pour commencer le jeu et afficher l'écran à jouer
+    void handleNouveauJeu(); // manipulation pour rẹjouer et afficher l'écran à choisir la facon de jouer
+    void handleResultat(); // manipulation pour afficher l'écran du résultat
+    void handleMeuilleurNote(); // manipulation pour afficher le meilleur joueur
 
-    void compareResultat(PacmanWindow &);
-    void readfile();
-    void writefile();
+//Les actions pour le résultat
+    void compareResultat(PacmanWindow &); // vérifier si le résultat est le meilleur
+    void readfile(); // lire le fichier .txt qui contient les meilleurs marks et le sauvegarder en tableau resultat
+    void writefile(); // écrire le meilleurs marks à un fichier .txt
 
-    void keyPressEvent(QKeyEvent *);
-    void timerEvent(QTimerEvent *);
+////Redéfinition méthode QMainWindow
+    void keyPressEvent(QKeyEvent *); // permettant à PacmanWindow  de prendre les événements de MainWnd
+    void timerEvent(QTimerEvent *); // si le jeu a fini, il permet de faire des actions pour le résultat
+
 private:
-    int timerId;
-    bool inGame;
+    int timerId; //permettant de synchroniser timer de Mainwnd et de Pacmanwindow
+    bool inGame; // pour savoir que vous êtes en jeu ou pas
 };
 
 

@@ -5,6 +5,9 @@
 #include <QtWidgets/QtWidgets>
 #include "Mainwnd.h"
 
+/*Cette class correspond à la fenêtre de bienvenue, il y a des butons à choisir comme: Un joueur, Deux joueur
+meilleur mark et quiter le jeu*/
+
 class Mainwnd::bienvenuewindow: public QFrame
 {
 public:

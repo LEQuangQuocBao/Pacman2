@@ -5,6 +5,9 @@
 #include <QtWidgets/QtWidgets>
 #include "Mainwnd.h"
 
+/*Cette class correspond à la fenetre de résultat, il y a le résultat(gagné ou perdu) qui est affiché ici,
+il y a aussi deux butons à choisir: Rejouer ou quitter le jeu*/
+
 class Mainwnd::resultWindow : public QFrame
 {
 public:

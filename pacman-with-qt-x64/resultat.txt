@@ -1,10 +1,10 @@
 Bao
 10
 25
-5
+8
 Champion
 Bao
 Linh
 10
 25
-Bao gagne Linh
+Linh gagne Bao

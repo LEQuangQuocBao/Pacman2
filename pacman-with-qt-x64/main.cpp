@@ -3,7 +3,6 @@
 #include<QtWidgets/qapplication.h>
 
 #include "Mainwnd.h"
-//#include "bienvenuewindow.h"
 
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 

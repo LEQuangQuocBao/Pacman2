@@ -4,8 +4,9 @@
 #include <QtCore/QtCore>
 #include <QtWidgets/QtWidgets>
 #include "jeu.h"
-//#include "joueurwindow.h"
 #include "Mainwnd.h"
+
+/*Cette class correspond à la fenetre de jeu, il y a un ou deux pacman à ridiger, des fantomes et les autres objets de comestiques*/
 
 class Mainwnd::PacmanWindow : public QFrame
 {
@@ -19,31 +20,22 @@ class Mainwnd::PacmanWindow : public QFrame
   public:
     PacmanWindow(QWidget *pParent=0, Qt::WindowFlags flags=0);
 
-    void loadImage();
-    void setupLabel();
-
-    //void ajoutFantome();        // ajouter un fantome
-    //void supprFantome();        // supprimer un fantome
-
+    void loadImage(); //charger des images
+    void setupLabel(); // initialisation des labels pour 1 ou 2 joueur
 
   public:
     void paintEvent(QPaintEvent *);
-    void paintMur(QPainter *);
-    void paintFantome(QPainter *);
-
     void keyPressEvent(QKeyEvent *);
     void handleTimer();
-    void handleCountdown();
+    void handleCountdown(); //manipulation pour compter à rebours
 
-
-    void configurer(string, string, int ,int ,int, int);
-    void startJeu();
-    void pauseJeu();
-    void stopJeu();
-    void gagneJeu(int );
-    void handleResultat();
-    void checkCollision(Pacman &);
-    void handleCollision();
+    void configurer(string, string, int ,int ,int, int); // configuration des choses nécessaires dans le jeu
+    void startJeu(); //lancer le jeu
+    void pauseJeu(); //faire un pause
+    void stopJeu(); //stopper le jeu, lorsde perdu
+    void gagneJeu(int ); // modifier le message du résultat lorsde gagné
+    void checkCollision(Pacman &); // vérifier si il y a une collision entre pacman et fantomes
+    void handleCollision(); // manipulation de la collision
 
   public:
     QLabel* label_countdown;
@@ -61,15 +53,4 @@ class Mainwnd::PacmanWindow : public QFrame
     string resultat;
     int countGod;
 };
-
-class PacmanButton : public QPushButton
-    {
-    //friend class PacmanWindow;
-    protected:
-        void keyPressEvent(QKeyEvent *);
-    public:
-        PacmanButton(QWidget *parent=0);
-    };
-
-
 #endif
